@@ -1,14 +1,12 @@
 lazy val akkaHttpVersion = "10.1.8"
 lazy val akkaVersion    = "2.5.22"
 
-name := "word-list-app"
-
 val stage = taskKey[Unit]("Stage task")
 
 val Stage = config("stage")
 
 stage := {
-  (packageWar in Compile).value
+  //(packageWar in Compile).value
   (update in Stage).value.allFiles.foreach { f =>
     if (f.getName.matches("webapp-runner-[0-9\\.]+.jar")) {
       println("copying " + f.getName)
