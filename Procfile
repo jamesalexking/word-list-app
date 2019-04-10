@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/word-list.app
+web: target/universal/stage/bin/word-list-app
