@@ -1,20 +1,22 @@
-enablePlugins(JavaAppPackaging)
+lazy val akkaHttpVersion = "10.1.8"
+lazy val akkaVersion    = "2.5.22"
 
-name := "akka-http-hello-world"
-organization := "mu.node"
-version := "1.1.0"
-scalaVersion := "2.11.6"
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
-assemblyJarName in assembly := "akka-http-hello-world.jar"
+lazy val root = (project in file(".")).
+  settings(
+    inThisBuild(List(
+      organization    := "com.example",
+      scalaVersion    := "2.12.7"
+    )),
+    name := "hello-world",
+    libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-http"            % akkaHttpVersion,
+      "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
+      "com.typesafe.akka" %% "akka-http-xml"        % akkaHttpVersion,
+      "com.typesafe.akka" %% "akka-stream"          % akkaVersion,
 
-libraryDependencies ++= {
-  val akkaStreamVersion = "1.0"
-  Seq(
-    "com.typesafe.akka" %% "akka-actor" % "2.3.12",
-    "com.typesafe.akka" % "akka-stream-experimental_2.11" % akkaStreamVersion,
-    "com.typesafe.akka" % "akka-http-core-experimental_2.11" % akkaStreamVersion,
-    "com.typesafe.akka" % "akka-http-experimental_2.11" % akkaStreamVersion
+      "com.typesafe.akka" %% "akka-http-testkit"    % akkaHttpVersion % Test,
+      "com.typesafe.akka" %% "akka-testkit"         % akkaVersion     % Test,
+      "com.typesafe.akka" %% "akka-stream-testkit"  % akkaVersion     % Test,
+      "org.scalatest"     %% "scalatest"            % "3.0.5"         % Test
+    )
   )
-}
-
-Revolver.settings
