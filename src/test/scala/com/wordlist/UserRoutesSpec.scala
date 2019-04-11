@@ -1,7 +1,5 @@
-package com.example
+package com.wordlist
 
-//#user-routes-spec
-//#test-top
 import akka.actor.ActorRef
 import akka.http.scaladsl.marshalling.Marshal
 import akka.http.scaladsl.model._
@@ -9,9 +7,8 @@ import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{ Matchers, WordSpec }
 
-//#set-up
 class UserRoutesSpec extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest
-    with UserRoutes {
+    with WordListRoutes {
   //#test-top
 
   // Here we need to implement all the abstract members of UserRoutes.

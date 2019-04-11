@@ -1,4 +1,4 @@
-package com.example
+package com.wordlist
 
 import akka.actor.{ ActorRef, ActorSystem }
 import akka.event.Logging
@@ -14,32 +14,24 @@ import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.http.scaladsl.server.directives.PathDirectives.path
 
 import scala.concurrent.Future
-import com.example.UserRegistryActor._
+import com.wordlist.UserRegistryActor._
 import akka.pattern.ask
 import akka.util.Timeout
 
-//#user-routes-class
-trait UserRoutes extends JsonSupport {
-  //#user-routes-class
+trait WordListRoutes extends JsonSupport {
 
-  // we leave these abstract, since they will be provided by the App
   implicit def system: ActorSystem
 
-  lazy val log = Logging(system, classOf[UserRoutes])
+  lazy val log = Logging(system, classOf[WordListRoutes])
 
-  // other dependencies that UserRoutes use
   def userRegistryActor: ActorRef
 
   // Required by the `ask` (?) method below
   implicit lazy val timeout = Timeout(5.seconds) // usually we'd obtain the timeout from the system's configuration
 
-  //#all-routes
-  //#users-get-post
-  //#users-get-delete
   lazy val userRoutes: Route =
     pathPrefix("users") {
       concat(
-        //#users-get-delete
         pathEnd {
           concat(
             get {
@@ -58,8 +50,7 @@ trait UserRoutes extends JsonSupport {
               }
             })
         },
-        //#users-get-post
-        //#users-get-delete
+
         path(Segment) { name =>
           concat(
             get {
@@ -79,10 +70,7 @@ trait UserRoutes extends JsonSupport {
                 log.info("Deleted user [{}]: {}", name, performed.description)
                 complete((StatusCodes.OK, performed))
               }
-              //#users-delete-logic
             })
         })
-      //#users-get-delete
     }
-  //#all-routes
 }
