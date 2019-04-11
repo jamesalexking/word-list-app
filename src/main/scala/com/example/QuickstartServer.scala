@@ -4,6 +4,7 @@ package com.example
 import scala.concurrent.{ Await, ExecutionContext, Future }
 import scala.concurrent.duration.Duration
 import scala.util.{ Failure, Success }
+import util.Properties
 
 import akka.actor.{ ActorRef, ActorSystem }
 import akka.http.scaladsl.Http
@@ -28,7 +29,7 @@ object QuickstartServer extends App with UserRoutes {
   lazy val routes: Route = userRoutes
   //#main-class
 
-  val httpPort = System.getProperty("http.port").toInt
+  val httpPort = Properties.envOrElse("PORT", "8080").toInt
   //#http-server
   val serverBinding: Future[Http.ServerBinding] = Http().bindAndHandle(routes, "localhost", httpPort)
 
