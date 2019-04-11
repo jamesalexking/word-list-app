@@ -1,7 +1,15 @@
+enablePlugins(JavaAppPackaging)
+
+//-----------------------
+// Properties
+//-----------------------
 lazy val akkaHttpVersion = "10.1.8"
 lazy val akkaVersion    = "2.5.22"
 
-lazy val helloWorldProject = (project in file("."))
+//-----------------------
+// Project
+//-----------------------
+lazy val root = (project in file("."))
 
   .settings(
     inThisBuild(List(
