@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/hello-world
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/universal/stage/bin/hello-world/target/scala-2.12/hello-world_2.12-0.1.0-SNAPSHOT.jar
