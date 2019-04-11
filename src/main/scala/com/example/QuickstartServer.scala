@@ -28,8 +28,9 @@ object QuickstartServer extends App with UserRoutes {
   lazy val routes: Route = userRoutes
   //#main-class
 
+  val httpPort = Int(System.getProperty("http.port"))
   //#http-server
-  val serverBinding: Future[Http.ServerBinding] = Http().bindAndHandle(routes, "localhost", 8080)
+  val serverBinding: Future[Http.ServerBinding] = Http().bindAndHandle(routes, "localhost", httpPort)
 
   serverBinding.onComplete {
     case Success(bound) =>
