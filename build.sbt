@@ -1,27 +1,16 @@
 lazy val akkaHttpVersion = "10.1.8"
 lazy val akkaVersion    = "2.5.22"
 
-val stage = taskKey[Unit]("Stage task")
+lazy val helloWorldProject = (project in file("."))
 
-val Stage = config("stage")
-
-stage := {
-  //(packageWar in Compile).value
-  (update in Stage).value.allFiles.foreach { f =>
-    if (f.getName.matches("webapp-runner-[0-9\\.]+.jar")) {
-      println("copying " + f.getName)
-      IO.copyFile(f, baseDirectory.value / "target" / "webapp-runner.jar")
-    }
-  }
-}
-
-lazy val root = (project in file(".")).
-  settings(
+  .settings(
     inThisBuild(List(
       organization    := "com.example",
       scalaVersion    := "2.12.7"
     )),
+
     name := "hello-world",
+
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-http"            % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
