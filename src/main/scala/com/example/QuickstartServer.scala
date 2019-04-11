@@ -30,7 +30,7 @@ object QuickstartServer extends App with UserRoutes {
 
   val httpPort = System.getProperty("http.port").toInt
   //#http-server
-  val serverBinding: Future[Http.ServerBinding] = Http().bindAndHandle(routes, "localhost")//, httpPort
+  val serverBinding: Future[Http.ServerBinding] = Http().bindAndHandle(routes, "localhost", httpPort)
 
   serverBinding.onComplete {
     case Success(bound) =>
