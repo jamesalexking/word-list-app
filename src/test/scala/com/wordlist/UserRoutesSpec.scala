@@ -78,6 +78,7 @@ class UserRoutesSpec extends WordSpec with Matchers with ScalaFutures with Scala
   //#actual-test
 
   //#set-up
+  override def wordActor: ActorRef = ???
 }
 //#set-up
 //#user-routes-spec

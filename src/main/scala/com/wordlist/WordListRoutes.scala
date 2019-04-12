@@ -15,6 +15,7 @@ import akka.http.scaladsl.server.directives.PathDirectives.path
 
 import scala.concurrent.Future
 import com.wordlist.UserRegistryActor._
+import com.wordlist.WordActor._
 import akka.pattern.ask
 import akka.util.Timeout
 
@@ -25,9 +26,22 @@ trait WordListRoutes extends JsonSupport {
   lazy val log = Logging(system, classOf[WordListRoutes])
 
   def userRegistryActor: ActorRef
+  def wordActor: ActorRef
 
   // Required by the `ask` (?) method below
   implicit lazy val timeout = Timeout(5.seconds) // usually we'd obtain the timeout from the system's configuration
+
+  lazy val wordRoutes: Route =
+    pathPrefix("words") {
+      concat(
+        pathEnd {
+          concat(
+            get {
+              val words: Future[Words] = (wordActor ? WordList).mapTo[Words]
+              complete(words)
+            })
+        })
+    }
 
   lazy val userRoutes: Route =
     pathPrefix("users") {
@@ -50,7 +64,6 @@ trait WordListRoutes extends JsonSupport {
               }
             })
         },
-
         path(Segment) { name =>
           concat(
             get {
@@ -63,7 +76,6 @@ trait WordListRoutes extends JsonSupport {
               //#retrieve-user-info
             },
             delete {
-              //#users-delete-logic
               val userDeleted: Future[ActionPerformed] =
                 (userRegistryActor ? DeleteUser(name)).mapTo[ActionPerformed]
               onSuccess(userDeleted) { performed =>

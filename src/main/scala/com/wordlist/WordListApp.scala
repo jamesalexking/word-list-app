@@ -18,8 +18,9 @@ object WordListApp extends App with WordListRoutes {
   implicit val executionContext: ExecutionContext = system.dispatcher
 
   val userRegistryActor: ActorRef = system.actorOf(UserRegistryActor.props, "userRegistryActor")
+  val wordActor: ActorRef = system.actorOf(WordActor.props, "wordActor")
 
-  lazy val routes: Route = userRoutes
+  lazy val routes: Route = wordRoutes
 
   val httpPort = Properties.envOrElse("PORT", "8080").toInt
   val serverBinding: Future[Http.ServerBinding] = Http().bindAndHandle(routes, "0.0.0.0", httpPort)
