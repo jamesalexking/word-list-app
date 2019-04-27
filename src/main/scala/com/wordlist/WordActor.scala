@@ -2,7 +2,6 @@ package com.wordlist
 
 import akka.actor.{ Actor, ActorLogging, Props }
 
-
 object WordDomain {
 
   /* domain */
@@ -20,6 +19,6 @@ object WordDomain {
 class WordActor extends Actor with ActorLogging {
 
   override def receive: Receive = {
-    case WordDomain.WordsRequest => sender() ! WordDomain.Words(Seq(WordDomain.Word("name","desc","example")))
+    case WordDomain.WordsRequest => sender() ! WordDomain.Words(Seq(WordDomain.Word("name", "desc", "example")))
   }
 }

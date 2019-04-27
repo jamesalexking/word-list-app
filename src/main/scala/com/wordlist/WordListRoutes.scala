@@ -1,6 +1,6 @@
 package com.wordlist
 
-import akka.actor.{ActorRef, ActorSystem}
+import akka.actor.{ ActorRef, ActorSystem }
 import akka.event.Logging
 
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
@@ -20,7 +20,6 @@ import com.wordlist.UserRegistryActor._
 import com.wordlist.WordDomain._
 import akka.pattern.ask
 import akka.util.Timeout
-
 
 trait WordListRoutes extends JsonSupport {
 
