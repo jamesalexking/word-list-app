@@ -2,13 +2,14 @@ package com.wordlist
 
 import akka.actor.{ Actor, ActorLogging, Props }
 
-/* domain */
-final case class Word(name: String, description: String, example: String)
 
-object WordActor {
+object WordDomain {
+
+  /* domain */
+  final case class Word(name: String, description: String, example: String)
 
   /* requests */
-  final case class WordList()
+  final case class WordsRequest()
 
   /* responses */
   final case class Words(words: Seq[Word])
@@ -19,6 +20,6 @@ object WordActor {
 class WordActor extends Actor with ActorLogging {
 
   override def receive: Receive = {
-    case WordActor.WordList => sender() ! WordActor.Words(Seq())
+    case WordDomain.WordsRequest => sender() ! WordDomain.Words(Seq(WordDomain.Word("name","desc","example")))
   }
 }

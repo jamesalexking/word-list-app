@@ -1,8 +1,10 @@
 package com.wordlist
 
-import akka.actor.{ ActorRef, ActorSystem }
+import akka.actor.{ActorRef, ActorSystem}
 import akka.event.Logging
 
+import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
+import io.circe.generic.auto._
 import scala.concurrent.duration._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model.StatusCodes
@@ -15,9 +17,10 @@ import akka.http.scaladsl.server.directives.PathDirectives.path
 
 import scala.concurrent.Future
 import com.wordlist.UserRegistryActor._
-import com.wordlist.WordActor._
+import com.wordlist.WordDomain._
 import akka.pattern.ask
 import akka.util.Timeout
+
 
 trait WordListRoutes extends JsonSupport {
 
@@ -37,8 +40,8 @@ trait WordListRoutes extends JsonSupport {
         pathEnd {
           concat(
             get {
-              val words: Future[Words] = (wordActor ? WordList).mapTo[Words]
-              complete(words)
+              val wordsFuture: Future[Words] = (wordActor ? WordsRequest).mapTo[Words]
+              complete(wordsFuture)
             })
         })
     }

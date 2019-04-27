@@ -18,7 +18,7 @@ object WordListApp extends App with WordListRoutes {
   implicit val executionContext: ExecutionContext = system.dispatcher
 
   val userRegistryActor: ActorRef = system.actorOf(UserRegistryActor.props, "userRegistryActor")
-  val wordActor: ActorRef = system.actorOf(WordActor.props, "wordActor")
+  val wordActor: ActorRef = system.actorOf(WordDomain.props, "wordActor")
 
   lazy val routes: Route = wordRoutes
 
